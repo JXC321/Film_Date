@@ -8,7 +8,7 @@ R = requests.Session()
 Url = 'http://58921.com'
 
 def log_in():
-    #模拟登录
+    #模拟登录,手动登录网站，然后复制cookies。将其转化为字典格式，然后登陆。
     cookies = {}
     url = 'http://58921.com/user/login'
     raw_cookies = 'remember=MTEzNTI2LjIxNjM0Mi4xMDI4MTYuMTA3MTAwLjExMTM4NC4yMDc3NzQuMTE5OTUyLjExMTM4NC4xMDI4MTYuMA%3D%3D; DIDA642a4585eb3d6e32fdaa37b44468fb6c=msl4r0g46n4h70r5cviefs2672; time=MTEzNTI2LjIxNjM0Mi4xMDI4MTYuMTA3MTAwLjExMTM4NC4yMDc3NzQuMTE5OTUyLjExMTM4NC4xMDQ5NTguMTExMzg0LjEyMjA5NC4xMTc4MTAuMTIyMDk0LjExNzgxMC4xMDQ5NTguMTA5MjQyLjExNzgxMC4xMTEzODQuMA%3D%3D; Hm_lvt_e71d0b417f75981e161a94970becbb1b=1497971126; Hm_lpvt_e71d0b417f75981e161a94970becbb1b=1497971375'
@@ -32,6 +32,7 @@ def get_page(year,number):
     
 
 def get_number(Text):
+    #得到页面的数量信息并返回
     reg = r'<li class="pager_last"><a href="/alltime/.+?\?page=(.+?)"'
     reg = re.compile(reg)
     number = re.findall(reg,Text)
@@ -136,7 +137,7 @@ def get_info(Text,sheet,k=1):
             print('获取类型失败')
         sheet.write(k,6,Type)
         
-        #获取电影的票房数据
+        #获取电影的票房数据，这个页面的数据是图片，无法使用，要到下个页面获取票房信息
         url_2 = url + '/boxoffice'
         res = R.get(url_2)
         res.encoding = 'utf-8'
@@ -158,7 +159,7 @@ def main():
     log_in()
     k = 1
     for i in range(2012,2016+1):
-        
+        #获取2012到2016年的票房数据
         Text = get_page(i,0)
        
         sheet = book.add_sheet(str(i) + '年的电影票房')
