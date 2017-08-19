@@ -19,7 +19,7 @@ def log_in():
     res = R.post(url,cookies = cookies)
 
 def get_page(year,number):
-    #抓取索引页面的信息，病返回页面的html文本
+    #抓取索引页面的信息，并返回页面的html文本
     url = 'http://58921.com/alltime' + '/' + str(year)
     if(number == 0):
         pass
@@ -184,6 +184,7 @@ def main():
         time.sleep(3)
         book.save('电影数据.xls')
         #break
+        
 if __name__ == '__main__':
     main()
     
